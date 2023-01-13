@@ -2,7 +2,7 @@
 
 ---
 
-`fastify-racing` is a plugin which allows to infer the incoming request's IP based on a custom subset of well known headers used by different providers or technologies that possible sits in-front of your fastify application.
+`fastify-ip` is a plugin which allows to infer the incoming request's IP based on a custom subset of well known headers used by different providers or technologies that possible sits in-front of your fastify application.
 
 ## How it works?
 
@@ -37,7 +37,7 @@ const fastify = require('fastify')({
   logger: true
 })
 
-fastify.register(require('fastify-racing'), {
+fastify.register(require('fastify-ip'), {
     order: ['x-my-ip-header'],
     strict: false
 })
