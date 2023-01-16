@@ -112,7 +112,7 @@ tap.test('Plugin#Decoration', scope => {
 })
 
 tap.test('Plugin#Request IP', scope => {
-  scope.plan(6)
+  scope.plan(8)
 
   scope.test('Should infer the header based on default priority', async t => {
     const app = fastify()
@@ -135,6 +135,131 @@ tap.test('Plugin#Request IP', scope => {
       headers: {
         'x-client-ip': expectedIP,
         'cf-connecting-ip': secondaryIP
+      }
+    })
+  })
+
+  scope.test('Fallback behavior on AWS Context', async t => {
+    const app = fastify()
+    const expectedIP = faker.internet.ip()
+    const secondaryIP = faker.internet.ip()
+    const childscope1 = (instance, _, done) => {
+      instance.register(plugin, { isAWS: true, order: ['x-custom-remote-ip'] })
+
+      instance.get('/first', (req, reply) => {
+        t.equal(req.ip, expectedIP)
+        t.equal(req._fastifyip, expectedIP)
+
+        reply.send('')
+      })
+
+      instance.get('/second', (req, reply) => {
+        t.equal(req.ip, secondaryIP)
+        t.equal(req._fastifyip, secondaryIP)
+
+        reply.send('')
+      })
+
+      done()
+    }
+    const childscope2 = (instance, _, done) => {
+      instance.register(plugin, { isAWS: true, strict: true })
+
+      instance.get('/', (req, reply) => {
+        t.equal(req.ip, '')
+        t.equal(req._fastifyip, '')
+
+        reply.send('')
+      })
+
+      done()
+    }
+    const childscope3 = (instance, _, done) => {
+      instance.register(plugin, { isAWS: true })
+
+      instance.get('/', (req, reply) => {
+        t.equal(req.ip, expectedIP)
+        t.equal(req._fastifyip, expectedIP)
+
+        reply.send('')
+      })
+
+      done()
+    }
+
+    t.plan(8)
+
+    app.register(childscope1, { prefix: '/fallback' })
+    app.register(childscope2, { prefix: '/no-fallback' })
+    app.register(childscope3, { prefix: '/soft' })
+
+    await app.inject({
+      path: '/fallback/first',
+      headers: {
+        'x-custom-remote-ip': expectedIP,
+        'x-forwarded-for': secondaryIP
+      }
+    })
+
+    await app.inject({
+      path: '/fallback/second',
+      headers: {
+        'x-forwarded-for': secondaryIP
+      }
+    })
+
+    await app.inject({
+      path: '/no-fallback',
+      headers: {
+        'x-custom-remote-ip': expectedIP,
+        'x-forwarded-for': secondaryIP
+      }
+    })
+
+    await app.inject({
+      path: '/soft',
+      headers: {
+        'x-appengine-user-ip': secondaryIP,
+        'x-real-ip': expectedIP
+      }
+    })
+  })
+
+  scope.test('Should infer the header based on if is AWS context', async t => {
+    const app = fastify()
+    const expectedIP = faker.internet.ip()
+    const fallbackIP = faker.internet.ipv6()
+
+    app.register(plugin, { isAWS: true })
+
+    app.get(
+      '/',
+      {
+        preHandler: function (req, reply, done) {
+          req.raw.requestContext = {
+            identity: {
+              sourceIp: expectedIP
+            }
+          }
+          done()
+        }
+      },
+      (req, reply) => {
+        t.equal(req.ip, expectedIP)
+        t.equal(req._fastifyip, expectedIP)
+
+        reply.send('')
+      }
+    )
+
+    t.plan(2)
+
+    await app.inject({
+      path: '/',
+      headers: {
+        'cf-connecting-ip': fallbackIP,
+        'x-client-ip': faker.internet.ipv6(),
+        'x-custom-remote-ip': expectedIP
       }
     })
   })
