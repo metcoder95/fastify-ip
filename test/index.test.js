@@ -184,10 +184,17 @@ tap.test('Plugin#Request IP', scope => {
         reply.send('')
       })
 
+      instance.get('/none', (req, reply) => {
+        t.equal(req.ip, '')
+        t.equal(req._fastifyip, '')
+
+        reply.send('')
+      })
+
       done()
     }
 
-    t.plan(8)
+    t.plan(10)
 
     app.register(childscope1, { prefix: '/fallback' })
     app.register(childscope2, { prefix: '/no-fallback' })
@@ -222,6 +229,10 @@ tap.test('Plugin#Request IP', scope => {
         'x-appengine-user-ip': secondaryIP,
         'x-real-ip': expectedIP
       }
+    })
+
+    await app.inject({
+      path: '/soft/none'
     })
   })
 
