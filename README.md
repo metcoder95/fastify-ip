@@ -39,7 +39,8 @@ const fastify = require('fastify')({
 
 fastify.register(require('fastify-ip'), {
     order: ['x-my-ip-header'],
-    strict: false
+    strict: false,
+    isAWS: false,
 })
 ```
 
@@ -47,7 +48,9 @@ fastify.register(require('fastify-ip'), {
 
 - `order` - `string[] | string` - **optional**: Array of custom headers or single custom header to be appended to the prior list of well-known headers. The headers passed will be prepend to the default headers list. It can also be used to alter the order of the list as deduplication of header names is made while loading the plugin.
 
-- `strict` - `boolean` - **optional**: Indicates whether to override the default list of well-known headers and replace it with the header(s) passed through the `order` option. If set to `true` without `order` property being provided, will not take any effect on the plugin. Default `false`.
+- `strict` - `boolean` - **optional**: Indicates whether to override the default list of well-known headers and replace it with the header(s) passed through the `order` option. If set to `true` without `order` or `isAWS` properties provided, it will lead to throwing an exception. Default `false`.
+
+- `isAWS` - `boolean` - **optional**: Indicates wether the plugin should explicitly try to infer the IP from the decorations made at the native Node.js HTTP Request object included in the Fastify Request. If set to `true` the plugin will treat this approach as a first option. Otherwise it will use it just as a fallback. Default `false`.
 
 
 ### API
@@ -99,6 +102,7 @@ app.post('/', (request: FastifyRequest, reply: FastifyReply) => {
 export interface FastifyIPOptions {
   order?: string[] | string;
   strict?: boolean;
+  isAWS?: boolean;
 }
 
 declare module 'fastify' {
