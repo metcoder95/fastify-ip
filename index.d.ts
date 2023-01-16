@@ -4,6 +4,7 @@ import { FastifyPluginCallback } from 'fastify';
 export interface FastifyIPOptions {
   order?: string[] | string;
   strict?: boolean;
+  isAWS?: boolean
 }
 
 declare module 'fastify' {
