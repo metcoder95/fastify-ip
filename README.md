@@ -1,4 +1,7 @@
 # fastify-ip
+![NPM](https://img.shields.io/npm/l/fastify-ip)
+[![npm](https://badge.fury.io/js/fastify-ip.svg)](https://badge.fury.io/js/fastify-ip)
+[![CI](https://github.com/metcoder95/fastify-ip/actions/workflows/ci.yml/badge.svg)](https://github.com/metcoder95/fastify-ip/actions/workflows/ci.yml)
 
 ---
 
