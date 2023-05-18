@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0](https://github.com/metcoder95/fastify-ip/compare/v0.1.1...v0.2.0) (2023-05-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* drop support for Node v14
+
+### Features
+
+* drop support for Node v14 ([c17c7f9](https://github.com/metcoder95/fastify-ip/commit/c17c7f9479667cd440449c8f5c08c9dfc8539ff0))
+
 ### [0.1.1](https://github.com/metcoder95/fastify-ip/compare/v0.1.0...v0.1.1) (2023-01-16)
 
 ## 0.1.0 (2023-01-16)
