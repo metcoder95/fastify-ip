@@ -27,7 +27,7 @@ The plugin will make a best-effort to infer the request's IP based on a subset o
 
 The plugin will use a FIFO strategy to infer the right IP. This can be customised by passing a custom  order  property that includes your custom headers.
 
->Note: It is important to remark that this does not alters the `Request#ips` behaviour for inferring IPs when setting the `FastifyOptions#trustProxy` to `true`. It rather allows you to infer the IP of a given request by headers out of the common spec or standard.
+>Note: It is important to remark that this does not alters the `Request#ips` behavior for inferring IPs when setting the `FastifyOptions#trustProxy` to `true`. It rather allows you to infer the IP of a given request by headers out of the common spec or standard. However, the `ip` decorator may be updated by fastify-ip, depending on the order of priority in which the above-mentioned headers are processed.
 
 ## Setup
 

@@ -61,8 +61,8 @@ function fastifyIp (
   instance.decorateRequest('inferIPVersion', inferIPVersion)
   instance.decorateRequest('_fastifyip', '')
 
-  // Core method
-  instance.decorateRequest('ip', {
+  const ipDecorator = {
+    // Core method
     getter: function () {
       let ip = this._fastifyip
       if (ip !== '') return ip
@@ -90,7 +90,28 @@ function fastifyIp (
 
       return ip
     }
-  })
+  }
+
+  const isTrustProxyOn = [
+    'ip',
+    'ips',
+    'hostname',
+    'protocol'
+  ].every((key) => instance.hasRequestDecorator(key))
+
+  if (isTrustProxyOn) {
+    function redefineIpDecorator (request, unusedReply, done) {
+      Object.defineProperty(request, 'ip', {
+        get: ipDecorator.getter.bind(request)
+      })
+
+      done()
+    }
+
+    instance.addHook('preHandler', redefineIpDecorator)
+  } else {
+    instance.decorateRequest('ip', ipDecorator)
+  }
 
   done()
 
