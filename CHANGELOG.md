@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.1](https://github.com/metcoder95/fastify-ip/compare/v1.0.0...v1.0.1) (2024-09-17)
+
+
+### Bug Fixes
+
+* redefine ip decorator when trustProxy option is set to true ([#51](https://github.com/metcoder95/fastify-ip/issues/51)) ([37b4aff](https://github.com/metcoder95/fastify-ip/commit/37b4affa836c8bd60d582bcf3b2e62e9d0bec7f6))
+
 ## [1.0.0](https://github.com/metcoder95/fastify-ip/compare/v0.2.0...v1.0.0) (2023-12-24)
 
 
