@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/metcoder95/fastify-ip/compare/v1.0.1...v1.1.0) (2024-09-18)
+
+
+### Features
+
+* replace preHandler hook with onRequest to define ip property ([#52](https://github.com/metcoder95/fastify-ip/issues/52)) ([795f84c](https://github.com/metcoder95/fastify-ip/commit/795f84c83ea9fa88abd7686167566b09db536279))
+
 ### [1.0.1](https://github.com/metcoder95/fastify-ip/compare/v1.0.0...v1.0.1) (2024-09-17)
 
 
