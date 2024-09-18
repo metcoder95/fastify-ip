@@ -112,7 +112,7 @@ tap.test('Plugin#Decoration', scope => {
 })
 
 tap.test('Plugin#Request IP', scope => {
-  scope.plan(9)
+  scope.plan(10)
 
   scope.test('Should infer the header based on default priority', async t => {
     const app = fastify()
@@ -503,6 +503,28 @@ tap.test('Plugin#Request IP', scope => {
     await app.inject('/withoutPlugin')
     await app.inject({
       path: '/withPlugin',
+      headers: {
+        'x-client-ip': expectedIP
+      }
+    })
+  })
+
+  scope.test('Should set the IP in the "onRequest" hook when trustProxy option is set to true', async t => {
+    const app = fastify({ trustProxy: true })
+    const expectedIP = faker.internet.ip()
+
+    app.register(plugin)
+    app.addHook('onRequest', async (req) => {
+      t.equal(req.ip, expectedIP)
+    })
+    app.get('/', async (req) => {
+      t.equal(req.ip, expectedIP)
+    })
+
+    t.plan(2)
+
+    await app.inject({
+      path: '/',
       headers: {
         'x-client-ip': expectedIP
       }
