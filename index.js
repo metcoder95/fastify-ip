@@ -108,7 +108,7 @@ function fastifyIp (
       done()
     }
 
-    instance.addHook('preHandler', redefineIpDecorator)
+    instance.addHook('onRequest', redefineIpDecorator)
   } else {
     instance.decorateRequest('ip', ipDecorator)
   }
