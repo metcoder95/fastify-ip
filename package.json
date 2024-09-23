@@ -40,7 +40,7 @@
     "typescript": "^5.0"
   },
   "dependencies": {
-    "fastify-plugin": "^4.4.0"
+    "fastify-plugin": "^5.0.1"
   },
   "tsd": {
     "directory": "test"
