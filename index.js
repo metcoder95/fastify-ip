@@ -3,7 +3,7 @@ const fp = require('fastify-plugin')
 const { inferIPVersion, isIP, isIPv4, isIPv6 } = require('./lib/ip')
 
 const plugin = fp(fastifyIp, {
-  fastify: '>=4.x',
+  fastify: '>=5.x',
   name: 'fastify-ip'
 })
 
