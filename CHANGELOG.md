@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/metcoder95/fastify-ip/compare/v1.1.0...v1.2.0) (2024-10-22)
+
+
+### Features
+
+* extend fastify support range ([ef36487](https://github.com/metcoder95/fastify-ip/commit/ef3648733bc0640fc65e8255484a92dee722f7f2))
+
+
+### Bug Fixes
+
+* require 'fastify>=5.x' ([#55](https://github.com/metcoder95/fastify-ip/issues/55)) ([00425d4](https://github.com/metcoder95/fastify-ip/commit/00425d44875e86178a4d5c443fae0b801f80ceb0))
+
 ## [1.1.0](https://github.com/metcoder95/fastify-ip/compare/v1.0.1...v1.1.0) (2024-09-18)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "fastify-ip",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Infer the request's IP based on custom headers on Fastify",
   "main": "index.js",
   "types": "index.d.ts",
